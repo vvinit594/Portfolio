@@ -8,7 +8,7 @@ import { ChevronDown } from "lucide-react";
 
 export function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0a0a0a] px-6 pt-24 pb-20">
+    <section className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0B0B0F] px-6 pt-24 pb-20">
       <HeroBackground />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">

@@ -1,12 +1,12 @@
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
+import { ScrollTransition } from "@/components/ScrollTransition";
 
 export default function Home() {
   return (
     <>
       <Header />
       <main>
-        <Hero />
+        <ScrollTransition />
       </main>
     </>
   );

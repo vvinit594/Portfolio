@@ -200,6 +200,169 @@
   transform: translateY(-1px);
 }
 
+/* Hero curved arc - optional subtle gradient pulse */
+@keyframes hero-arc-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.92;
+  }
+}
+
+.hero-arc-container {
+  animation: hero-arc-pulse 12s ease-in-out infinite;
+}
+
+/* Projects Section - Layered scroll overlay */
+.projects-section-layered {
+  box-shadow:
+    0 -4px 30px rgba(0, 0, 0, 0.5),
+    0 -1px 0 rgba(255, 255, 255, 0.03);
+  position: relative;
+}
+
+.projects-section-layered::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 20%,
+    rgba(255, 255, 255, 0.06) 50%,
+    rgba(255, 255, 255, 0.04) 80%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+.projects-section-layered::after {
+  content: "";
+  position: absolute;
+  top: -60px;
+  left: -20px;
+  right: -20px;
+  height: 80px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.15) 60%,
+    transparent 100%
+  );
+  filter: blur(24px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Premium Project Cards - Glassmorphism + Sphere */
+.project-card-premium {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.03) 0%,
+    rgba(11, 11, 15, 0.95) 50%,
+    rgba(11, 11, 15, 1) 100%
+  );
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    0 4px 24px rgba(0, 0, 0, 0.3);
+  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card-premium:hover {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(15, 15, 20, 0.98) 50%,
+    rgba(11, 11, 15, 1) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 0 60px rgba(255, 255, 255, 0.04),
+    0 24px 48px rgba(0, 0, 0, 0.4);
+  transform: translateY(-6px);
+}
+
+.project-card-premium:hover .project-sphere-halo,
+.project-card-premium:hover .project-sphere {
+  filter: brightness(1.15);
+}
+
+.project-tag {
+  transition: all 0.3s ease;
+}
+
+.project-card-premium:hover .project-tag {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Animated 2D Sphere */
+.project-sphere-container {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .project-sphere-container {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+.project-sphere-halo {
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.6;
+  animation: sphere-float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.project-sphere {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  filter: blur(0);
+  animation: sphere-float-breathe 6s ease-in-out infinite;
+  pointer-events: none;
+  transition: filter 0.6s ease;
+}
+
+@keyframes sphere-float-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  25% {
+    transform: translateY(-8px) scale(1.04);
+  }
+  50% {
+    transform: translateY(0) scale(1.06);
+  }
+  75% {
+    transform: translateY(-6px) scale(1.02);
+  }
+}
+
 /* Premium classic CTA buttons */
 .hero-cta-button {
   background: linear-gradient(
