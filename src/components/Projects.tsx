@@ -6,7 +6,6 @@ import { ExternalLink } from "lucide-react";
 
 type GlowColor =
   | "purple-violet"
-  | "cyan-blue"
   | "pink-purple"
   | "golden-amber"
   | "royal-blue";
@@ -20,15 +19,6 @@ const selectedWork = [
     url: "https://flow-deck-delta.vercel.app/",
     tags: ["Next.js", "AI", "Real-time"],
     glowColor: "purple-violet" as GlowColor,
-  },
-  {
-    title: "AI Interview Platform",
-    fullTitle: "AI Interview Platform – An AI Powered Interview Simulator",
-    description:
-      "Practice interviews with real-time AI feedback to improve communication and confidence.",
-    url: "https://ai-interview-ebon-two.vercel.app/",
-    tags: ["AI", "React", "Speech"],
-    glowColor: "cyan-blue" as GlowColor,
   },
   {
     title: "Fuora Social",
@@ -67,11 +57,6 @@ const glowStyles: Record<GlowColor, { gradient: string; glow: string }> = {
     gradient:
       "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(139, 92, 246, 0.5) 0%, rgba(124, 58, 237, 0.3) 40%, transparent 70%)",
     glow: "rgba(139, 92, 246, 0.35)",
-  },
-  "cyan-blue": {
-    gradient:
-      "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(34, 211, 238, 0.5) 0%, rgba(59, 130, 246, 0.3) 40%, transparent 70%)",
-    glow: "rgba(34, 211, 238, 0.35)",
   },
   "pink-purple": {
     gradient:
@@ -187,7 +172,7 @@ export function Projects() {
       className="projects-section-layered relative rounded-t-3xl bg-[#0B0B0F] px-6 py-28 md:px-12 md:py-32"
     >
       <div className="mx-auto max-w-6xl">
-        {/* Section Header */}
+        {/* Freelancing Section */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -195,17 +180,17 @@ export function Projects() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mb-20"
         >
-          <h2 className="font-satoshi text-3xl font-normal tracking-tight text-white md:text-4xl">
-            Selected Work
+          <h2 className="font-satoshi text-2xl font-normal tracking-tight text-white md:text-3xl">
+            Freelancing Projects
           </h2>
           <p className="font-satoshi mt-4 text-lg text-white/55">
-            Product-focused projects building scalable platforms
+            E-commerce and luxury brand experiences
           </p>
         </motion.div>
 
-        {/* Selected Work */}
+        {/* Freelancing Projects */}
         <div className="space-y-6 md:space-y-8">
-          {selectedWork.map((project, i) => (
+          {freelancingProjects.map((project, i) => (
             <ProjectCard
               key={project.title}
               fullTitle={project.fullTitle}
@@ -218,7 +203,7 @@ export function Projects() {
           ))}
         </div>
 
-        {/* Freelancing Section */}
+        {/* Selected Work */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -226,16 +211,16 @@ export function Projects() {
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           className="mt-32 md:mt-40"
         >
-          <h2 className="font-satoshi text-2xl font-normal tracking-tight text-white md:text-3xl">
-            Freelancing Projects
+          <h2 className="font-satoshi text-3xl font-normal tracking-tight text-white md:text-4xl">
+            Selected Work
           </h2>
           <p className="font-satoshi mt-4 text-lg text-white/55">
-            E-commerce and luxury brand experiences
+            Product-focused projects building scalable platforms
           </p>
         </motion.div>
 
         <div className="mt-10 space-y-6 md:mt-12 md:space-y-8">
-          {freelancingProjects.map((project, i) => (
+          {selectedWork.map((project, i) => (
             <ProjectCard
               key={project.title}
               fullTitle={project.fullTitle}
@@ -243,7 +228,7 @@ export function Projects() {
               url={project.url}
               tags={project.tags}
               glowColor={project.glowColor}
-              index={i + selectedWork.length}
+              index={i + freelancingProjects.length}
             />
           ))}
         </div>
