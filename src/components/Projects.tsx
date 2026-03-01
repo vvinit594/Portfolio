@@ -1,14 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
-
-type GlowColor =
-  | "purple-violet"
-  | "pink-purple"
-  | "golden-amber"
-  | "royal-blue";
 
 const selectedWork = [
   {
@@ -18,7 +13,7 @@ const selectedWork = [
       "A unified digital workspace combining tasks, chat, AI, and invoicing into one streamlined platform.",
     url: "https://flow-deck-delta.vercel.app/",
     tags: ["Next.js", "AI", "Real-time"],
-    glowColor: "purple-violet" as GlowColor,
+    imageSrc: "/FlowDeck.png",
   },
   {
     title: "Fuora Social",
@@ -27,7 +22,7 @@ const selectedWork = [
       "Automate scheduling, analytics, and content workflows in one centralized system.",
     url: "https://fuora-frontend.onrender.com/",
     tags: ["Social", "Automation", "React"],
-    glowColor: "pink-purple" as GlowColor,
+    imageSrc: "/Fuora.png",
   },
 ];
 
@@ -39,7 +34,7 @@ const freelancingProjects = [
       "A premium shopping experience with elegant UI and refined brand aesthetics.",
     url: "https://luxuryjewelleryecommercewebsite-imw.vercel.app/",
     tags: ["E-commerce", "Luxury", "React"],
-    glowColor: "golden-amber" as GlowColor,
+    imageSrc: "/Akelva.png",
   },
   {
     title: "Elegance",
@@ -48,50 +43,25 @@ const freelancingProjects = [
       "A luxury clothing brand experience showcasing premium design and smooth UI.",
     url: "https://elegance-ici0.onrender.com/",
     tags: ["Fashion", "Luxury", "Next.js"],
-    glowColor: "royal-blue" as GlowColor,
+    imageSrc: "/Elegance.png",
   },
 ];
-
-const glowStyles: Record<GlowColor, { gradient: string; glow: string }> = {
-  "purple-violet": {
-    gradient:
-      "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(139, 92, 246, 0.5) 0%, rgba(124, 58, 237, 0.3) 40%, transparent 70%)",
-    glow: "rgba(139, 92, 246, 0.35)",
-  },
-  "pink-purple": {
-    gradient:
-      "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(236, 72, 153, 0.45) 0%, rgba(139, 92, 246, 0.35) 40%, transparent 70%)",
-    glow: "rgba(236, 72, 153, 0.35)",
-  },
-  "golden-amber": {
-    gradient:
-      "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(251, 191, 36, 0.45) 0%, rgba(245, 158, 11, 0.3) 40%, transparent 70%)",
-    glow: "rgba(251, 191, 36, 0.3)",
-  },
-  "royal-blue": {
-    gradient:
-      "radial-gradient(ellipse 80% 80% at 50% 50%, rgba(59, 130, 246, 0.45) 0%, rgba(30, 64, 175, 0.35) 40%, transparent 70%)",
-    glow: "rgba(59, 130, 246, 0.35)",
-  },
-};
 
 function ProjectCard({
   fullTitle,
   description,
   url,
   tags,
-  glowColor,
+  imageSrc,
   index,
 }: {
   fullTitle: string;
   description: string;
   url: string;
   tags: string[];
-  glowColor: GlowColor;
+  imageSrc: string;
   index: number;
 }) {
-  const { gradient, glow } = glowStyles[glowColor];
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 32 }}
@@ -106,9 +76,21 @@ function ProjectCard({
         rel="noopener noreferrer"
         className="block h-full"
       >
-        <div className="flex min-h-[220px] flex-col px-6 py-6 md:min-h-[260px] md:flex-row md:items-center md:justify-between md:px-10 md:py-8">
+        <div className="project-image-panel absolute inset-y-0 right-0 hidden w-[42%] overflow-hidden md:block">
+          <Image
+            src={imageSrc}
+            alt={fullTitle}
+            fill
+            className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+            sizes="42vw"
+            priority={false}
+          />
+          <div className="project-image-overlay absolute inset-0" />
+        </div>
+
+        <div className="relative z-10 flex min-h-[220px] flex-col px-6 py-6 md:min-h-[260px] md:px-10 md:py-8">
           {/* Left: Content */}
-          <div className="relative z-10 flex flex-1 flex-col justify-center md:pr-8">
+          <div className="relative flex flex-1 flex-col justify-center md:max-w-[58%] md:pr-8">
             <h3 className="font-satoshi text-xl font-medium text-white md:text-2xl">
               {fullTitle}
             </h3>
@@ -130,26 +112,17 @@ function ProjectCard({
             </span>
           </div>
 
-          {/* Right: Animated Sphere */}
-          <div className="relative flex flex-shrink-0 items-center justify-center md:w-[45%] md:max-w-[320px]">
-            <div className="project-sphere-container">
-              {/* Halo / background glow */}
-              <div
-                className="project-sphere-halo"
-                style={{
-                  background: gradient,
-                  boxShadow: `0 0 120px 60px ${glow}`,
-                }}
-              />
-              {/* Main sphere */}
-              <div
-                className="project-sphere"
-                style={{
-                  background: gradient,
-                  boxShadow: `0 0 80px 40px ${glow}`,
-                }}
-              />
-            </div>
+          {/* Mobile: Show project image below content */}
+          <div className="relative mt-6 h-44 w-full overflow-hidden rounded-xl border border-white/10 md:hidden">
+            <Image
+              src={imageSrc}
+              alt={fullTitle}
+              fill
+              className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              sizes="100vw"
+              priority={false}
+            />
+            <div className="project-image-overlay absolute inset-0" />
           </div>
         </div>
 
@@ -197,7 +170,7 @@ export function Projects() {
               description={project.description}
               url={project.url}
               tags={project.tags}
-              glowColor={project.glowColor}
+              imageSrc={project.imageSrc}
               index={i}
             />
           ))}
@@ -227,7 +200,7 @@ export function Projects() {
               description={project.description}
               url={project.url}
               tags={project.tags}
-              glowColor={project.glowColor}
+              imageSrc={project.imageSrc}
               index={i + freelancingProjects.length}
             />
           ))}
