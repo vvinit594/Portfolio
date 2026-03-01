@@ -314,16 +314,17 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
-  width: 72px;
+  left: -32px;
+  width: 140px;
   z-index: 2;
   background: linear-gradient(
     to right,
-    rgba(11, 11, 15, 0.97) 0%,
-    rgba(11, 11, 15, 0.75) 40%,
+    rgba(11, 11, 15, 1) 0%,
+    rgba(11, 11, 15, 0.88) 35%,
     rgba(11, 11, 15, 0) 100%
   );
-  box-shadow: 18px 0 36px rgba(11, 11, 15, 0.55);
+  filter: blur(10px);
+  box-shadow: 0 0 30px rgba(11, 11, 15, 0.4);
   pointer-events: none;
 }
 
@@ -337,7 +338,7 @@
 }
 
 .project-card-premium:hover .project-image-panel::before {
-  box-shadow: 20px 0 42px rgba(11, 11, 15, 0.62);
+  box-shadow: 0 0 34px rgba(11, 11, 15, 0.5);
 }
 
 /* Premium classic CTA buttons */
