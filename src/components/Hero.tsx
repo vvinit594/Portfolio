@@ -12,19 +12,6 @@ export function Hero() {
       <HeroBackground />
 
       <div className="relative z-10 mx-auto max-w-4xl text-center">
-        {/* Pill-shaped label */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 backdrop-blur-sm"
-        >
-          <span className="size-2 rounded-full bg-emerald-500" />
-          <span className="font-satoshi text-sm font-medium text-white/90">
-            Full-Stack Developer & AI Engineer
-          </span>
-        </motion.div>
-
         {/* Headline */}
         <motion.h1
           initial={{ opacity: 0, y: 30 }}

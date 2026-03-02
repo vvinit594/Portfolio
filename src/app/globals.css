@@ -259,12 +259,155 @@
   z-index: -1;
 }
 
-/* Premium Project Cards - Glassmorphism + Sphere */
+/* Experience timeline */
+.experience-timeline-line {
+  border-radius: 999px;
+  background: linear-gradient(
+    to bottom,
+    rgba(124, 58, 237, 0.35) 0%,
+    rgba(147, 51, 234, 0.72) 40%,
+    rgba(79, 70, 229, 0.36) 100%
+  );
+  box-shadow:
+    0 0 18px rgba(147, 51, 234, 0.38),
+    0 0 36px rgba(124, 58, 237, 0.2);
+  animation: experience-line-pulse 4.8s ease-in-out infinite;
+}
+
+.experience-timeline-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  border-radius: inherit;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(233, 213, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  filter: blur(5px);
+  animation: experience-line-shimmer 6.5s linear infinite;
+}
+
+.experience-node {
+  background: radial-gradient(circle, #e9d5ff 20%, #7c3aed 70%, #4f46e5 100%);
+  box-shadow:
+    0 0 0 3px rgba(124, 58, 237, 0.2),
+    0 0 16px rgba(147, 51, 234, 0.75),
+    0 0 30px rgba(79, 70, 229, 0.35);
+  animation: experience-node-pulse 2.8s ease-in-out infinite;
+}
+
+.experience-card {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.24);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 28px rgba(0, 0, 0, 0.34);
+  transition: transform 0.45s ease, box-shadow 0.45s ease, border-color 0.45s ease;
+}
+
+.experience-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 24px rgba(124, 58, 237, 0.18),
+    0 14px 34px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes experience-line-shimmer {
+  0% {
+    top: -120px;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.65;
+  }
+  100% {
+    top: calc(100% + 24px);
+    opacity: 0;
+  }
+}
+
+@keyframes experience-line-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes experience-node-pulse {
+  0%,
+  100% {
+    opacity: 0.85;
+    box-shadow:
+      0 0 0 3px rgba(124, 58, 237, 0.2),
+      0 0 16px rgba(147, 51, 234, 0.75),
+      0 0 30px rgba(79, 70, 229, 0.35);
+  }
+  50% {
+    opacity: 1;
+    box-shadow:
+      0 0 0 6px rgba(124, 58, 237, 0.18),
+      0 0 22px rgba(147, 51, 234, 0.95),
+      0 0 40px rgba(79, 70, 229, 0.45);
+  }
+}
+
+/* Premium Project Cards - animated rotating gradient border */
 .project-card-premium {
   position: relative;
   overflow: hidden;
   border-radius: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  isolation: isolate;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-card-premium::before {
+  content: "";
+  position: absolute;
+  inset: -45%;
+  border-radius: inherit;
+  z-index: 0;
+  pointer-events: none;
+  background: conic-gradient(
+    from 0deg,
+    rgba(124, 58, 237, 0) 0deg,
+    rgba(124, 58, 237, 0.55) 75deg,
+    rgba(147, 51, 234, 0.45) 150deg,
+    rgba(79, 70, 229, 0.5) 235deg,
+    rgba(255, 255, 255, 0.18) 300deg,
+    rgba(124, 58, 237, 0) 360deg
+  );
+  opacity: 0.55;
+  filter: blur(14px);
+  animation: project-border-spin 5.6s linear infinite;
+  transform-origin: center;
+}
+
+.project-card-premium::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border-radius: calc(1.5rem - 4px);
+  z-index: 1;
+  pointer-events: none;
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.03) 0%,
@@ -274,13 +417,22 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 4px 24px rgba(0, 0, 0, 0.3);
-  transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 6px 24px rgba(0, 0, 0, 0.32);
 }
 
 .project-card-premium:hover {
-  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-6px) scale(1.01);
+}
+
+.project-card-premium:hover::before {
+  opacity: 0.72;
+  filter: blur(16px);
+  animation-duration: 4.8s;
+}
+
+.project-card-premium:hover::after {
   background: linear-gradient(
     135deg,
     rgba(255, 255, 255, 0.05) 0%,
@@ -289,9 +441,9 @@
   );
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
-    0 0 60px rgba(255, 255, 255, 0.04),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 36px rgba(124, 58, 237, 0.14),
     0 24px 48px rgba(0, 0, 0, 0.4);
-  transform: translateY(-6px);
 }
 
 .project-tag {
@@ -339,6 +491,15 @@
 
 .project-card-premium:hover .project-image-panel::before {
   box-shadow: 0 0 34px rgba(11, 11, 15, 0.5);
+}
+
+@keyframes project-border-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Premium classic CTA buttons */

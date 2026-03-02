@@ -74,7 +74,7 @@ function ProjectCard({
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block h-full"
+        className="relative z-[2] block h-full"
       >
         <div className="project-image-panel absolute inset-y-0 right-0 hidden w-[42%] overflow-hidden md:block">
           <Image
@@ -185,7 +185,7 @@ export function Projects() {
           className="mt-32 md:mt-40"
         >
           <h2 className="font-satoshi text-3xl font-normal tracking-tight text-white md:text-4xl">
-            Selected Work
+            Personal Projects
           </h2>
           <p className="font-satoshi mt-4 text-lg text-white/55">
             Product-focused projects building scalable platforms

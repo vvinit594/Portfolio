@@ -1,5 +1,6 @@
 import { Header } from "@/components/Header";
 import { ScrollTransition } from "@/components/ScrollTransition";
+import { ExperienceTimeline } from "@/components/ExperienceTimeline";
 
 export default function Home() {
   return (
@@ -7,6 +8,7 @@ export default function Home() {
       <Header />
       <main>
         <ScrollTransition />
+        <ExperienceTimeline />
       </main>
     </>
   );
