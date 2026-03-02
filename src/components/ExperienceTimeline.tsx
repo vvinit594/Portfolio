@@ -51,7 +51,7 @@ export function ExperienceTimeline() {
   return (
     <section
       id="experience"
-      className="relative bg-[#0B0B0F] px-6 py-28 md:px-12 md:py-32"
+      className="relative rounded-t-3xl bg-[#0B0B0F] px-6 py-28 md:px-12 md:py-32"
     >
       <div className="mx-auto max-w-6xl">
         <motion.div

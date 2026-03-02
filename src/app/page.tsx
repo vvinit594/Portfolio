@@ -1,14 +1,12 @@
 import { Header } from "@/components/Header";
-import { ScrollTransition } from "@/components/ScrollTransition";
-import { ExperienceTimeline } from "@/components/ExperienceTimeline";
+import { ProjectsExperienceTransition } from "@/components/ProjectsExperienceTransition";
 
 export default function Home() {
   return (
     <>
       <Header />
       <main>
-        <ScrollTransition />
-        <ExperienceTimeline />
+        <ProjectsExperienceTransition />
       </main>
     </>
   );
