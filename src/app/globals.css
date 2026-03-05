@@ -270,6 +270,101 @@
   isolation: isolate;
 }
 
+/* Services section - layered overlap */
+.services-section-layered {
+  box-shadow:
+    0 -18px 70px rgba(0, 0, 0, 0.6),
+    0 -2px 0 rgba(255, 255, 255, 0.06),
+    0 -1px 24px rgba(124, 58, 237, 0.12);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.services-section-layered::before {
+  content: "";
+  position: absolute;
+  top: -48px;
+  left: -20px;
+  right: -20px;
+  height: 110px;
+  background: linear-gradient(
+    to bottom,
+    rgba(124, 58, 237, 0.06) 0%,
+    rgba(0, 0, 0, 0.25) 45%,
+    transparent 100%
+  );
+  filter: blur(28px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Service cards - glassmorphism, glow, gradient */
+.service-card {
+  position: relative;
+  background: linear-gradient(
+    155deg,
+    rgba(30, 20, 50, 0.6) 0%,
+    rgba(20, 12, 35, 0.85) 50%,
+    rgba(15, 10, 25, 0.9) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.22);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 8px 28px rgba(0, 0, 0, 0.3),
+    0 0 30px rgba(124, 58, 237, 0.04);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 28px rgba(124, 58, 237, 0.18),
+    0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.service-check-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.9) 0%,
+    rgba(99, 102, 241, 0.85) 100%
+  );
+  box-shadow:
+    0 0 12px rgba(124, 58, 237, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.service-card-button {
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.9) 0%,
+    rgba(147, 51, 234, 0.95) 50%,
+    rgba(126, 34, 206, 0.9) 100%
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: white !important;
+  box-shadow:
+    0 0 20px rgba(124, 58, 237, 0.25),
+    0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+.service-card-button:hover {
+  background: linear-gradient(
+    90deg,
+    rgba(147, 51, 234, 0.95) 0%,
+    rgba(126, 34, 206, 1) 100%
+  ) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow:
+    0 0 32px rgba(124, 58, 237, 0.45),
+    0 6px 18px rgba(0, 0, 0, 0.3) !important;
+  transform: translateY(-1px);
+}
+
 .experience-layered::before {
   content: "";
   position: absolute;
