@@ -90,7 +90,7 @@ function ServiceCard({ card, index }: { card: ServiceCard; index: number }) {
         </ul>
 
         <Link href="#contact" className="mt-10 block">
-          <Button className="service-card-button w-full rounded-full py-5 text-sm font-medium md:py-6 md:text-base">
+          <Button className="hero-cta-button font-satoshi w-full rounded-full px-6 py-3 text-sm font-normal text-white md:text-base">
             {card.buttonText}
           </Button>
         </Link>
