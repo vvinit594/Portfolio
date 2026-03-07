@@ -63,19 +63,19 @@ function ServiceCard({ card, index }: { card: ServiceCard; index: number }) {
         delay: index * 0.1,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="service-card group"
+      className="service-card group rounded-3xl"
     >
-      <div className="flex h-full flex-col rounded-3xl p-7 md:p-8">
-        <h3 className="font-satoshi text-xl font-medium text-white md:text-2xl">
+      <div className="flex h-full flex-col p-8 md:p-10">
+        <h3 className="font-satoshi text-2xl font-medium text-white md:text-[1.65rem]">
           {card.title}
         </h3>
-        <p className="font-satoshi mt-3 text-[0.9375rem] leading-relaxed text-white/65 md:text-base">
+        <p className="font-satoshi mt-4 text-[0.9375rem] leading-relaxed text-white/65 md:text-base">
           {card.description}
         </p>
 
-        <div className="my-6 h-px w-full bg-white/10" />
+        <div className="my-7 h-px w-full bg-white/10 md:my-8" />
 
-        <ul className="flex-1 space-y-3">
+        <ul className="flex-1 space-y-3.5">
           {card.features.map((feature) => (
             <li
               key={feature}
@@ -89,8 +89,8 @@ function ServiceCard({ card, index }: { card: ServiceCard; index: number }) {
           ))}
         </ul>
 
-        <Link href="#contact" className="mt-8 block">
-          <Button className="service-card-button w-full rounded-xl py-5 text-sm font-medium md:py-6 md:text-base">
+        <Link href="#contact" className="mt-10 block">
+          <Button className="service-card-button w-full rounded-full py-5 text-sm font-medium md:py-6 md:text-base">
             {card.buttonText}
           </Button>
         </Link>
@@ -122,7 +122,7 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-3">
           {services.map((card, index) => (
             <ServiceCard key={card.title} card={card} index={index} />
           ))}
