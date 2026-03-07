@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type ServiceCard = {
@@ -81,9 +80,7 @@ function ServiceCard({ card, index }: { card: ServiceCard; index: number }) {
               key={feature}
               className="font-satoshi flex items-center gap-3 text-sm text-white/90 md:text-[0.9375rem]"
             >
-              <span className="service-check-icon flex size-6 shrink-0 items-center justify-center rounded-full">
-                <Check className="size-3.5 stroke-[2.5] text-violet-200" />
-              </span>
+              <span className="size-2 shrink-0 rounded-full bg-[#8B5CF6]" />
               <span>{feature}</span>
             </li>
           ))}
