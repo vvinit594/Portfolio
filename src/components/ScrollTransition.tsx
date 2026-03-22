@@ -26,7 +26,7 @@ export function ScrollTransition() {
           scale: heroScale,
           transformOrigin: "center center",
         }}
-        className="sticky top-0 z-10 h-screen will-change-[opacity,transform]"
+        className="sticky top-0 z-10 h-screen"
       >
         <Hero />
       </motion.div>
