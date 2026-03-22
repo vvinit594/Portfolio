@@ -1,19 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-type ServiceCard = {
+type Service = {
+  id: string;
   title: string;
   description: string;
   features: string[];
   buttonText: string;
-  buttonHref?: string;
 };
 
-const services: ServiceCard[] = [
+const servicesData: Service[] = [
   {
+    id: "saas",
     title: "SaaS Web Development",
     description:
       "Building scalable, modern web platforms with strong architecture and performance.",
@@ -26,6 +28,7 @@ const services: ServiceCard[] = [
     buttonText: "Start a Project",
   },
   {
+    id: "ai",
     title: "AI & Automation Systems",
     description:
       "Integrating AI capabilities and automation workflows into modern applications.",
@@ -38,6 +41,7 @@ const services: ServiceCard[] = [
     buttonText: "Explore AI Solutions",
   },
   {
+    id: "app",
     title: "App Development",
     description:
       "Designing and building scalable mobile applications for modern businesses.",
@@ -51,52 +55,53 @@ const services: ServiceCard[] = [
   },
 ];
 
-function ServiceCard({ card, index }: { card: ServiceCard; index: number }) {
+function ServicePanel({ service }: { service: Service }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: 0.6,
-        delay: index * 0.1,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className="service-card group rounded-3xl"
+      key={service.id}
+      initial={{ opacity: 0, x: 16 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -16 }}
+      transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      className="services-panel-content"
     >
-      <div className="flex h-full flex-col p-8 md:p-10">
-        <h3 className="font-satoshi text-2xl font-medium text-white md:text-[1.65rem]">
-          {card.title}
-        </h3>
-        <p className="font-satoshi mt-4 text-[0.9375rem] leading-relaxed text-white/65 md:text-base">
-          {card.description}
-        </p>
+      <h3 className="font-satoshi text-2xl font-medium text-white md:text-3xl">
+        {service.title}
+      </h3>
+      <p className="font-satoshi mt-5 text-base leading-relaxed text-white/65 md:text-lg">
+        {service.description}
+      </p>
 
-        <div className="my-7 h-px w-full bg-white/10 md:my-8" />
+      <ul className="mt-8 space-y-3">
+        {service.features.map((feature) => (
+          <li
+            key={feature}
+            className="font-satoshi flex items-center gap-3 text-sm text-white/90 md:text-base"
+          >
+            <span className="size-2 shrink-0 rounded-full bg-[#8B5CF6]" />
+            <span>{feature}</span>
+          </li>
+        ))}
+      </ul>
 
-        <ul className="flex-1 space-y-3.5">
-          {card.features.map((feature) => (
-            <li
-              key={feature}
-              className="font-satoshi flex items-center gap-3 text-sm text-white/90 md:text-[0.9375rem]"
-            >
-              <span className="size-2 shrink-0 rounded-full bg-[#8B5CF6]" />
-              <span>{feature}</span>
-            </li>
-          ))}
-        </ul>
+      <Link href="#contact" className="mt-10 inline-block">
+        <Button className="hero-cta-button font-satoshi rounded-full px-8 py-3 text-sm font-normal text-white md:text-base">
+          {service.buttonText}
+        </Button>
+      </Link>
 
-        <Link href="#contact" className="mt-10 block">
-          <Button className="hero-cta-button font-satoshi w-full rounded-full px-6 py-3 text-sm font-normal text-white md:text-base">
-            {card.buttonText}
-          </Button>
-        </Link>
-      </div>
+      <div
+        className="services-panel-visual absolute right-0 top-1/2 hidden -translate-y-1/2 lg:block"
+        aria-hidden
+      />
     </motion.div>
   );
 }
 
 export function Services() {
+  const [activeId, setActiveId] = useState(servicesData[0].id);
+  const activeService = servicesData.find((s) => s.id === activeId) ?? servicesData[0];
+
   return (
     <section
       id="services"
@@ -119,10 +124,35 @@ export function Services() {
           </p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2 md:gap-10 lg:grid-cols-3">
-          {services.map((card, index) => (
-            <ServiceCard key={card.title} card={card} index={index} />
-          ))}
+        <div className="services-split-layout flex flex-col gap-12 md:flex-row md:gap-16">
+          {/* Left: Service list (navigation) */}
+          <nav className="services-nav shrink-0 md:w-[280px] lg:w-[320px]">
+            <ul className="space-y-1">
+              {servicesData.map((service) => {
+                const isActive = activeId === service.id;
+                return (
+                  <li key={service.id}>
+                    <button
+                      type="button"
+                      onClick={() => setActiveId(service.id)}
+                      className={`services-nav-item w-full text-left transition-all duration-300 ${
+                        isActive ? "services-nav-item-active" : ""
+                      }`}
+                    >
+                      {service.title}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
+          {/* Right: Dynamic content panel */}
+          <div className="services-panel relative min-h-[360px] flex-1 rounded-2xl md:min-h-[400px]">
+            <AnimatePresence mode="wait">
+              <ServicePanel service={activeService} />
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>
