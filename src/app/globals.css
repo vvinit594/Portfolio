@@ -372,6 +372,52 @@
   pointer-events: none;
 }
 
+/* Testimonials - floating conversation UI */
+.testimonials-section-layered {
+  box-shadow:
+    0 -18px 70px rgba(0, 0, 0, 0.6),
+    0 -2px 0 rgba(255, 255, 255, 0.06),
+    0 -1px 24px rgba(124, 58, 237, 0.1);
+  overflow: hidden;
+}
+
+.testimonials-section {
+  background: #0b0b0f;
+}
+
+.testimonials-bg-glow {
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 40%,
+    rgba(124, 58, 237, 0.06) 0%,
+    rgba(124, 58, 237, 0.02) 40%,
+    transparent 70%
+  );
+}
+
+.testimonial-bubble-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.03) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.2);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 24px rgba(124, 58, 237, 0.06);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.testimonial-bubble-card:hover {
+  border-color: rgba(167, 139, 250, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 36px rgba(124, 58, 237, 0.12),
+    0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
 @media (min-width: 768px) {
   .services-panel {
     padding: 2.5rem 2.5rem 2.5rem 2.5rem;
@@ -668,4 +714,201 @@
     0 -2px 0 rgba(255, 255, 255, 0.06),
     0 -1px 24px rgba(124, 58, 237, 0.12);
   overflow: hidden;
+}
+
+/* Contact - premium workspace */
+.contact-section-layered {
+  box-shadow:
+    0 -18px 70px rgba(0, 0, 0, 0.6),
+    0 -2px 0 rgba(255, 255, 255, 0.06),
+    0 -1px 24px rgba(124, 58, 237, 0.1);
+  overflow: hidden;
+}
+
+.contact-section {
+  background: #0b0b0f;
+}
+
+.contact-bg-glow {
+  background: radial-gradient(
+    ellipse 70% 50% at 50% 20%,
+    rgba(124, 58, 237, 0.08) 0%,
+    rgba(124, 58, 237, 0.02) 45%,
+    transparent 70%
+  );
+}
+
+.contact-choice-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.22);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.28);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  cursor: pointer;
+}
+
+.contact-choice-card:hover {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 36px rgba(124, 58, 237, 0.14),
+    0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.contact-choice-icon {
+  background: linear-gradient(
+    135deg,
+    rgba(124, 58, 237, 0.25) 0%,
+    rgba(79, 70, 229, 0.15) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.15);
+}
+
+.contact-form-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .contact-form-panel {
+    padding: 2.5rem 3rem;
+  }
+}
+
+.contact-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 0.5rem;
+}
+
+.contact-input,
+.contact-textarea {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  padding: 0.875rem 1rem;
+  font-size: 0.9375rem;
+  color: white;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.contact-input::placeholder,
+.contact-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.contact-input:focus,
+.contact-textarea:focus {
+  outline: none;
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.12);
+}
+
+.contact-option {
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+
+.contact-option:hover {
+  border-color: rgba(147, 51, 234, 0.35);
+  color: white;
+}
+
+.contact-option-active {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(167, 139, 250, 0.45);
+  color: white;
+  box-shadow: 0 0 20px rgba(124, 58, 237, 0.1);
+}
+
+.contact-file-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px dashed rgba(147, 51, 234, 0.35);
+  border-radius: 0.75rem;
+  padding: 1.25rem 1rem;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+}
+
+.contact-file-input::file-selector-button {
+  margin-right: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(124, 58, 237, 0.25);
+  color: white;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.contact-step-progress {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.contact-step-dot {
+  height: 4px;
+  flex: 1;
+  max-width: 3rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.3s ease;
+}
+
+.contact-step-dot-active {
+  background: linear-gradient(90deg, #7c3aed, #8b5cf6);
+  box-shadow: 0 0 12px rgba(124, 58, 237, 0.4);
+}
+
+.contact-social-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.05) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.18);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.contact-social-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(167, 139, 250, 0.4);
+  box-shadow:
+    0 0 28px rgba(124, 58, 237, 0.12),
+    0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.contact-social-icon {
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(147, 51, 234, 0.25);
 }

@@ -6,11 +6,15 @@ import { ScrollTransition } from "./ScrollTransition";
 import { ExperienceTimeline } from "./ExperienceTimeline";
 import { Services } from "./Services";
 import { HowWeWork } from "./HowWeWork";
+import { Testimonials } from "./Testimonials";
+import { Contact } from "./Contact";
 
 export function ProjectsExperienceTransition() {
   const servicesRef = useRef<HTMLDivElement>(null);
   const howWeWorkRef = useRef<HTMLDivElement>(null);
+  const testimonialsRef = useRef<HTMLDivElement>(null);
   const experienceRef = useRef<HTMLDivElement>(null);
+  const contactRef = useRef<HTMLDivElement>(null);
 
   // Services enters: Projects fades/scales
   const { scrollYProgress: servicesProgress } = useScroll({
@@ -28,13 +32,29 @@ export function ProjectsExperienceTransition() {
   const servicesOpacity = useTransform(howWeWorkProgress, [0, 1], [1, 0.82]);
   const servicesScale = useTransform(howWeWorkProgress, [0, 1], [1, 0.97]);
 
-  // Experience enters: How We Work fades/scales
+  // Testimonials enters: How We Work fades/scales
+  const { scrollYProgress: testimonialsProgress } = useScroll({
+    target: testimonialsRef,
+    offset: ["start end", "start start"],
+  });
+  const howWeWorkOpacity = useTransform(testimonialsProgress, [0, 1], [1, 0.82]);
+  const howWeWorkScale = useTransform(testimonialsProgress, [0, 1], [1, 0.97]);
+
+  // Experience enters: Testimonials fades/scales
   const { scrollYProgress: experienceProgress } = useScroll({
     target: experienceRef,
     offset: ["start end", "start start"],
   });
-  const howWeWorkOpacity = useTransform(experienceProgress, [0, 1], [1, 0.82]);
-  const howWeWorkScale = useTransform(experienceProgress, [0, 1], [1, 0.97]);
+  const testimonialsOpacity = useTransform(experienceProgress, [0, 1], [1, 0.82]);
+  const testimonialsScale = useTransform(experienceProgress, [0, 1], [1, 0.97]);
+
+  // Contact enters: Experience fades/scales
+  const { scrollYProgress: contactProgress } = useScroll({
+    target: contactRef,
+    offset: ["start end", "start start"],
+  });
+  const experienceOpacity = useTransform(contactProgress, [0, 1], [1, 0.82]);
+  const experienceScale = useTransform(contactProgress, [0, 1], [1, 0.97]);
 
   return (
     <div className="relative">
@@ -81,11 +101,39 @@ export function ProjectsExperienceTransition() {
         <HowWeWork />
       </motion.div>
 
-      <div
+      <motion.div
+        ref={testimonialsRef}
+        style={{
+          opacity: testimonialsOpacity,
+          scale: testimonialsScale,
+          transformOrigin: "center top",
+        }}
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-120px" }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="testimonials-section-layered relative z-[38] -mt-[24vh] rounded-t-3xl pb-[16vh] md:-mt-[28vh] md:pb-[18vh]"
+      >
+        <Testimonials />
+      </motion.div>
+
+      <motion.div
         ref={experienceRef}
-        className="experience-layered relative z-40 -mt-[24vh] md:-mt-[28vh]"
+        style={{
+          opacity: experienceOpacity,
+          scale: experienceScale,
+          transformOrigin: "center top",
+        }}
+        className="experience-layered relative z-40 -mt-[24vh] pb-[16vh] md:-mt-[28vh] md:pb-[18vh]"
       >
         <ExperienceTimeline />
+      </motion.div>
+
+      <div
+        ref={contactRef}
+        className="contact-section-layered relative z-[42] -mt-[24vh] rounded-t-3xl md:-mt-[28vh]"
+      >
+        <Contact />
       </div>
     </div>
   );
