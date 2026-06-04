@@ -20,7 +20,7 @@ const selectedWork = [
     fullTitle: "Fuora Social – A Social Media Automation Platform",
     description:
       "Automate scheduling, analytics, and content workflows in one centralized system.",
-    url: "https://fuora-frontend.onrender.com/",
+    url: "https://fuorasocial.com",
     tags: ["Social", "Automation", "React"],
     imageSrc: "/Fuora.png",
   },
