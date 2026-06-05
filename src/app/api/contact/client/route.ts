@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getResend, getNotificationEmail, getFromEmail } from "@/lib/resend";
+import { sendContactNotification } from "@/lib/resend";
 import { clientInquirySchema } from "@/lib/validation/contact";
 import { sanitizeOptionalString, sanitizeString } from "@/lib/sanitize";
 import { checkRateLimit, getClientIp } from "@/lib/rate-limit";
@@ -48,24 +48,14 @@ export async function POST(request: Request) {
 
     await prisma.clientInquiry.create({ data });
 
-    const resend = getResend();
-    const { error } = await resend.emails.send({
-      from: getFromEmail(),
-      to: getNotificationEmail(),
+    const emailResult = await sendContactNotification({
       subject: "🚀 New Client Inquiry Received",
       html: buildClientInquiryEmail(data),
       replyTo: data.email,
     });
 
-    if (error) {
-      console.error("Resend client inquiry error:", error);
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Something went wrong.",
-        },
-        { status: 500 }
-      );
+    if (!emailResult.ok) {
+      console.warn("Client inquiry saved but email notification failed.");
     }
 
     return NextResponse.json({

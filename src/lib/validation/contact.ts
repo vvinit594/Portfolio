@@ -50,10 +50,17 @@ const ALLOWED_RESUME_TYPES = new Set([
 
 const MAX_RESUME_SIZE = 5 * 1024 * 1024;
 
+const ALLOWED_RESUME_EXTENSIONS = new Set(["pdf", "doc", "docx"]);
+
 export function validateResumeFile(file: File | null): string | null {
   if (!file || file.size === 0) return null;
 
-  if (!ALLOWED_RESUME_TYPES.has(file.type)) {
+  const extension = file.name.split(".").pop()?.toLowerCase();
+  const typeAllowed = ALLOWED_RESUME_TYPES.has(file.type);
+  const extensionAllowed =
+    !!extension && ALLOWED_RESUME_EXTENSIONS.has(extension);
+
+  if (!typeAllowed && !(file.type === "" && extensionAllowed)) {
     return "Resume must be a PDF or DOCX file.";
   }
 

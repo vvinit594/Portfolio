@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getResend, getNotificationEmail, getFromEmail } from "@/lib/resend";
+import { sendContactNotification } from "@/lib/resend";
 import {
   teamApplicationSchema,
   validateResumeFile,
@@ -93,30 +93,20 @@ export async function POST(request: Request) {
       ? [
           {
             filename: resume.name,
-            content: Buffer.from(await resume.arrayBuffer()).toString("base64"),
+            content: Buffer.from(await resume.arrayBuffer()),
           },
         ]
       : undefined;
 
-    const resend = getResend();
-    const { error } = await resend.emails.send({
-      from: getFromEmail(),
-      to: getNotificationEmail(),
+    const emailResult = await sendContactNotification({
       subject: "👨‍💻 New Team Application Received",
       html: buildTeamApplicationEmail(data, resume?.name),
       replyTo: data.email,
       attachments,
     });
 
-    if (error) {
-      console.error("Resend team application error:", error);
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Something went wrong.",
-        },
-        { status: 500 }
-      );
+    if (!emailResult.ok) {
+      console.warn("Team application saved but email notification failed.");
     }
 
     return NextResponse.json({
