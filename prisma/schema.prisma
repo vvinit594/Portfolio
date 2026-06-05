@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ClientInquiry {
+  id                 String   @id @default(cuid())
+  fullName           String
+  companyName        String?
+  email              String
+  phone              String?
+  projectType        String
+  budget             String
+  timeline           String
+  projectDescription String   @db.Text
+  referralSource     String?
+  createdAt          DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+}
+
+model TeamApplication {
+  id           String   @id @default(cuid())
+  fullName     String
+  email        String
+  phone        String?
+  role         String
+  experience   String
+  portfolioUrl String?
+  linkedinUrl  String?
+  whyJoin      String   @db.Text
+  availability String
+  createdAt    DateTime @default(now())
+
+  @@index([email])
+  @@index([createdAt])
+}

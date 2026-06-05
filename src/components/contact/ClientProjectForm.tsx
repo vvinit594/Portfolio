@@ -9,6 +9,7 @@ import {
   GlassTextarea,
   OptionGroup,
 } from "./ContactFormPrimitives";
+import { ContactFormStatus, SubmitButton } from "./ContactFormStatus";
 
 const BUILD_OPTIONS = [
   "SaaS Platform",
@@ -51,7 +52,8 @@ const stepVariants = {
 
 export function ClientProjectForm({ onBack }: { onBack: () => void }) {
   const [step, setStep] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [fullName, setFullName] = useState("");
   const [company, setCompany] = useState("");
@@ -67,30 +69,61 @@ export function ClientProjectForm({ onBack }: { onBack: () => void }) {
 
   const totalSteps = 4;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (status === "loading" || status === "success") return;
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    const projectDescription = [
+      projectDetails.trim(),
+      stage ? `Project Stage: ${stage}` : "",
+      support ? `Ongoing Support: ${support}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
+    try {
+      const response = await fetch("/api/contact/client", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName,
+          companyName: company || undefined,
+          email,
+          phone: phone || undefined,
+          projectType: buildType,
+          budget,
+          timeline,
+          projectDescription,
+          referralSource: communication || undefined,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setStatus("error");
+        setErrorMessage(result.message ?? "Something went wrong.");
+        return;
+      }
+
+      setStatus("success");
+    } catch {
+      setStatus("error");
+      setErrorMessage("Something went wrong. Please try again.");
+    }
   };
 
-  if (submitted) {
+  if (status === "success") {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="contact-form-panel text-center"
-      >
-        <p className="font-satoshi text-2xl text-white">Thank you!</p>
-        <p className="font-satoshi mt-3 text-white/60">
-          We&apos;ll review your project details and get back to you soon.
-        </p>
-        <button
-          type="button"
-          onClick={onBack}
-          className="font-satoshi mt-8 text-sm text-violet-300/90 transition-colors hover:text-violet-200"
-        >
-          ← Back to workspace
-        </button>
-      </motion.div>
+      <ContactFormStatus
+        state="success"
+        successTitle="Thank you."
+        successMessage="Your message has been received."
+        onBack={onBack}
+      />
     );
   }
 
@@ -121,6 +154,14 @@ export function ClientProjectForm({ onBack }: { onBack: () => void }) {
           ))}
         </div>
       </div>
+
+      <ContactFormStatus
+        state={status}
+        successTitle=""
+        successMessage=""
+        errorMessage={errorMessage}
+        onBack={onBack}
+      />
 
       <form onSubmit={step === totalSteps - 1 ? handleSubmit : (e) => e.preventDefault()}>
         <AnimatePresence mode="wait">
@@ -206,7 +247,8 @@ export function ClientProjectForm({ onBack }: { onBack: () => void }) {
             <button
               type="button"
               onClick={() => setStep((s) => s - 1)}
-              className="font-satoshi flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+              disabled={status === "loading"}
+              className="font-satoshi flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white disabled:opacity-50"
             >
               <ArrowLeft className="size-4" />
               Previous
@@ -219,18 +261,16 @@ export function ClientProjectForm({ onBack }: { onBack: () => void }) {
             <Button
               type="button"
               onClick={() => setStep((s) => s + 1)}
+              disabled={status === "loading"}
               className="hero-cta-button font-satoshi rounded-full px-8 py-3 text-sm font-normal text-white"
             >
               Continue
               <ArrowRight className="size-4" />
             </Button>
           ) : (
-            <Button
-              type="submit"
-              className="hero-cta-button font-satoshi rounded-full px-8 py-3 text-sm font-normal text-white"
-            >
+            <SubmitButton loading={status === "loading"}>
               Start My Project
-            </Button>
+            </SubmitButton>
           )}
         </div>
       </form>

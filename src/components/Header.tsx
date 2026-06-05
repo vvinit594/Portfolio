@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
@@ -13,14 +13,41 @@ const navLinks = [
   { href: "#contact", label: "Contact" },
 ];
 
+const SCROLL_THRESHOLD = 15;
+const TOP_THRESHOLD = 10;
+
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+  const { scrollY } = useScroll();
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest <= TOP_THRESHOLD) {
+      setIsVisible(true);
+      lastScrollY.current = latest;
+      return;
+    }
+
+    const diff = latest - lastScrollY.current;
+
+    if (diff < 0) {
+      setIsVisible(true);
+      lastScrollY.current = latest;
+    } else if (diff >= SCROLL_THRESHOLD) {
+      setIsVisible(false);
+      lastScrollY.current = latest;
+    }
+  });
 
   return (
     <motion.header
       initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
+      animate={{
+        opacity: 1,
+        y: isVisible ? 0 : "-120%",
+      }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
       className="fixed left-0 right-0 top-0 z-50 flex justify-center px-4 pt-4 md:px-8 md:pt-6"
     >
       <div className="relative w-full max-w-5xl">

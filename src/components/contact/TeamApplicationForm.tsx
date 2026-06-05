@@ -10,6 +10,7 @@ import {
   OptionGroup,
   MultiSelectChips,
 } from "./ContactFormPrimitives";
+import { ContactFormStatus, SubmitButton } from "./ContactFormStatus";
 
 const ROLE_OPTIONS = [
   "Frontend Developer",
@@ -60,7 +61,8 @@ const stepVariants = {
 
 export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
   const [step, setStep] = useState(0);
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -73,6 +75,7 @@ export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
   const [whyJoin, setWhyJoin] = useState("");
   const [skills, setSkills] = useState<string[]>([]);
   const [availability, setAvailability] = useState("");
+  const [resume, setResume] = useState<File | null>(null);
 
   const totalSteps = 4;
 
@@ -82,30 +85,62 @@ export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    if (status === "loading" || status === "success") return;
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    const whyJoinCombined = [
+      about.trim() ? `About:\n${about.trim()}` : "",
+      whyJoin.trim() ? `Why Join:\n${whyJoin.trim()}` : "",
+      skills.length > 0 ? `Skills: ${skills.join(", ")}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
+    const formData = new FormData();
+    formData.append("fullName", fullName);
+    formData.append("email", email);
+    if (phone) formData.append("phone", phone);
+    formData.append("role", role);
+    formData.append("experience", experience);
+    if (portfolio) formData.append("portfolioUrl", portfolio);
+    if (linkedin) formData.append("linkedinUrl", linkedin);
+    formData.append("whyJoin", whyJoinCombined);
+    formData.append("availability", availability);
+    if (resume) formData.append("resume", resume);
+
+    try {
+      const response = await fetch("/api/contact/team", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        setStatus("error");
+        setErrorMessage(result.message ?? "Something went wrong.");
+        return;
+      }
+
+      setStatus("success");
+    } catch {
+      setStatus("error");
+      setErrorMessage("Something went wrong. Please try again.");
+    }
   };
 
-  if (submitted) {
+  if (status === "success") {
     return (
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="contact-form-panel text-center"
-      >
-        <p className="font-satoshi text-2xl text-white">Application received!</p>
-        <p className="font-satoshi mt-3 text-white/60">
-          Thanks for your interest. We&apos;ll be in touch if there&apos;s a fit.
-        </p>
-        <button
-          type="button"
-          onClick={onBack}
-          className="font-satoshi mt-8 text-sm text-violet-300/90 transition-colors hover:text-violet-200"
-        >
-          ← Back to workspace
-        </button>
-      </motion.div>
+      <ContactFormStatus
+        state="success"
+        successTitle="Application received."
+        successMessage="We'll review it shortly."
+        onBack={onBack}
+      />
     );
   }
 
@@ -136,6 +171,14 @@ export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
           ))}
         </div>
       </div>
+
+      <ContactFormStatus
+        state={status}
+        successTitle=""
+        successMessage=""
+        errorMessage={errorMessage}
+        onBack={onBack}
+      />
 
       <form onSubmit={step === totalSteps - 1 ? handleSubmit : (e) => e.preventDefault()}>
         <AnimatePresence mode="wait">
@@ -208,6 +251,7 @@ export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
                   type="file"
                   accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                   className="contact-file-input font-satoshi w-full"
+                  onChange={(e) => setResume(e.target.files?.[0] ?? null)}
                 />
               </div>
               <OptionGroup label="Availability" options={AVAILABILITY_OPTIONS} value={availability} onChange={setAvailability} columns={2} />
@@ -220,7 +264,8 @@ export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
             <button
               type="button"
               onClick={() => setStep((s) => s - 1)}
-              className="font-satoshi flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white"
+              disabled={status === "loading"}
+              className="font-satoshi flex items-center gap-2 text-sm text-white/60 transition-colors hover:text-white disabled:opacity-50"
             >
               <ArrowLeft className="size-4" />
               Previous
@@ -233,18 +278,16 @@ export function TeamApplicationForm({ onBack }: { onBack: () => void }) {
             <Button
               type="button"
               onClick={() => setStep((s) => s + 1)}
+              disabled={status === "loading"}
               className="hero-cta-button font-satoshi rounded-full px-8 py-3 text-sm font-normal text-white"
             >
               Continue
               <ArrowRight className="size-4" />
             </Button>
           ) : (
-            <Button
-              type="submit"
-              className="hero-cta-button font-satoshi rounded-full px-8 py-3 text-sm font-normal text-white"
-            >
+            <SubmitButton loading={status === "loading"}>
               Join The Team
-            </Button>
+            </SubmitButton>
           )}
         </div>
       </form>
