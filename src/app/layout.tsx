@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { LenisProvider } from "@/components/LenisProvider";
 
@@ -46,6 +47,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen bg-[#0B0B0F] antialiased`}
       >
         <LenisProvider>{children}</LenisProvider>
+        <GoogleAnalytics gaId="G-054E7M38PT" />
       </body>
     </html>
   );
