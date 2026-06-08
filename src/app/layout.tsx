@@ -28,6 +28,35 @@ export const metadata: Metadata = {
     "Portfolio",
     "Vinit Vishwakarma",
   ],
+  metadataBase: new URL("https://codewithvini.tech"),
+  openGraph: {
+    title: "Vinit Vishwakarma | Full Stack Developer & AI Solutions",
+    description:
+      "Building SaaS Platforms, AI Automations, and Full Stack Applications for Startups and Businesses Worldwide.",
+    url: "https://codewithvini.tech",
+    siteName: "CodeWithVini",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "CodeWithVini Portfolio",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vinit Vishwakarma | Full Stack Developer & AI Solutions",
+    description:
+      "Building SaaS Platforms, AI Automations, and Full Stack Applications for Startups and Businesses Worldwide.",
+    images: ["/og-image.png"],
+  },
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
