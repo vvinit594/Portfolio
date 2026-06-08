@@ -14,9 +14,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vinit | Full-Stack Developer & AI Engineer",
+  title: "Vinit Vishwakarma | Full Stack Developer & AI Solutions",
   description:
-    "Full-Stack Developer & AI Enthusiast specializing in scalable SaaS platforms, modern web architecture, and intelligent automation workflows.",
+    "Building SaaS Platforms, AI Automations, and Full Stack Applications for Startups and Businesses Worldwide.",
+  keywords: [
+    "Full Stack Developer",
+    "Next.js Developer",
+    "React Developer",
+    "AI Automation",
+    "SaaS Development",
+    "Web Development",
+    "Portfolio",
+    "Vinit Vishwakarma",
+  ],
 };
 
 export default function RootLayout({
