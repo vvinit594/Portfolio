@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { href: "#services", label: "Services" },
-  { href: "#projects", label: "Projects" },
-  { href: "#testimonials", label: "Testimonials" },
-  { href: "#contact", label: "Contact" },
+  { href: "/#services", label: "Services" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/results-delivered", label: "Results" },
+  { href: "/#testimonials", label: "Testimonials" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 const SCROLL_THRESHOLD = 15;
@@ -81,13 +82,13 @@ export function Header() {
             asChild
             className="navbar-btn-secondary font-satoshi hidden h-9 rounded-full px-4 text-sm font-normal text-white sm:inline-flex md:h-10 md:px-5"
           >
-            <Link href="#projects">View Work</Link>
+            <Link href="/#projects">View Work</Link>
           </Button>
           <Button
             asChild
             className="navbar-btn-primary font-satoshi h-9 rounded-full px-4 text-sm font-normal text-white md:h-10 md:px-5"
           >
-            <Link href="#contact">Get in Touch</Link>
+            <Link href="/#contact">Get in Touch</Link>
           </Button>
 
           {/* Mobile Menu Toggle */}
