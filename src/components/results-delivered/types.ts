@@ -59,6 +59,7 @@ export type CaseStudy = {
     items: CaseStudyImpact[];
   };
   gallery: GalleryItem[];
+  galleryLayout?: "carousel" | "premium";
   testimonial?: {
     quote: string;
     author: string;

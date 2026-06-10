@@ -1217,6 +1217,28 @@
     0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
+.results-gallery-grid .results-gallery-card {
+  width: 100%;
+}
+
+.results-gallery-modal {
+  background: rgba(5, 5, 8, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.results-gallery-modal-panel {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    rgba(255, 255, 255, 0.02) 100%
+  );
+  border: 1px solid rgba(147, 51, 234, 0.28);
+  box-shadow:
+    0 0 48px rgba(124, 58, 237, 0.18),
+    0 24px 80px rgba(0, 0, 0, 0.55);
+}
+
 .results-testimonial-card {
   background: linear-gradient(
     135deg,

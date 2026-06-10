@@ -169,6 +169,9 @@ export const matchupIndiaCaseStudy: CaseStudy = {
   category: "Matchmaking Platform",
   title: "MatchUpIndia — Modern Matchmaking Platform Experience",
   tagline: "Transforming traditional matchmaking into a modern digital platform.",
+  coverImage: "/Second.png",
+  coverImageAlt: "MatchUpIndia modern matchmaking platform showcase",
+  galleryLayout: "premium",
   floatingCards: [
     { variant: "stat", label: "Profile Views", value: "12.4K" },
     { variant: "badge", label: "Mobile Ready", value: "100% Responsive", accent: "violet" },
@@ -326,24 +329,40 @@ export const matchupIndiaCaseStudy: CaseStudy = {
   },
   gallery: [
     {
-      title: "MatchUp Landing Page",
-      description: "Hero-driven landing experience built for trust and conversion.",
+      src: "/Landing.png",
+      title: "Landing Page Experience",
+      description:
+        "Modern landing page designed to increase engagement and build user trust.",
     },
     {
-      title: "Profile Discovery Experience",
-      description: "Intuitive browsing flow for exploring user profiles.",
+      src: "/Platform.png",
+      title: "Platform Dashboard",
+      description:
+        "Core platform interface designed for intuitive navigation and seamless user interaction.",
     },
     {
-      title: "Responsive Mobile View",
-      description: "Mobile-optimized layouts for on-the-go users.",
+      src: "/Profile.png",
+      title: "Profile Discovery",
+      description:
+        "Clean and engaging profile browsing experience optimized for user exploration.",
     },
     {
-      title: "User Journey Flow",
-      description: "Smooth navigation across key platform touchpoints.",
+      src: "/Responsive.png",
+      title: "Responsive Design",
+      description:
+        "Mobile-first responsive experience across all screen sizes and devices.",
     },
     {
-      title: "Platform Interface Design",
-      description: "Cohesive visual system across the full product experience.",
+      src: "/user.png",
+      title: "User Experience Flow",
+      description:
+        "Optimized user journey focused on usability and engagement.",
+    },
+    {
+      src: "/FlowDeck.png",
+      title: "Platform Workflow",
+      description:
+        "Structured user flow designed to simplify interactions and improve conversion.",
     },
   ],
   summary:

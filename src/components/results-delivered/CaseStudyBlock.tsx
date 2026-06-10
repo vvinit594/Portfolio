@@ -29,7 +29,10 @@ export function CaseStudyBlock({ study, showTopDivider = false }: CaseStudyBlock
       <FeaturesSection features={study.features} />
       <TechStackSection tech={study.tech} />
       <ImpactSection impact={study.impact} />
-      <GallerySection gallery={study.gallery} />
+      <GallerySection
+        gallery={study.gallery}
+        layout={study.galleryLayout ?? "carousel"}
+      />
       {study.testimonial && <TestimonialSection testimonial={study.testimonial} />}
       {study.summary && <SummarySection summary={study.summary} />}
       {study.cta && <CaseStudyCtaSection cta={study.cta} />}
