@@ -359,7 +359,7 @@ export const matchupIndiaCaseStudy: CaseStudy = {
         "Optimized user journey focused on usability and engagement.",
     },
     {
-      src: "/FlowDeck.png",
+      src: "/Platform.png",
       title: "Platform Workflow",
       description:
         "Structured user flow designed to simplify interactions and improve conversion.",
