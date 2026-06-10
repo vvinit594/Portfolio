@@ -3,16 +3,13 @@
 import { motion } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { fadeUp, stagger } from "./motion";
+import type { CaseStudy } from "./types";
 
-const problems = [
-  "Long queues during participant check-ins",
-  "Manual participant verification",
-  "Spreadsheet-based tracking",
-  "Collection management errors",
-  "No real-time visibility",
-];
+type ProblemSectionProps = {
+  problem: CaseStudy["problem"];
+};
 
-export function ProblemSection() {
+export function ProblemSection({ problem }: ProblemSectionProps) {
   return (
     <section className="results-section results-problem-bg relative px-6 py-28 md:px-10 md:py-36 lg:px-16">
       <div className="mx-auto max-w-3xl text-center">
@@ -32,7 +29,7 @@ export function ProblemSection() {
           variants={fadeUp}
           className="font-satoshi mt-6 text-lg text-white/50"
         >
-          Operational friction that slows events and creates risk at scale.
+          {problem.subtitle}
         </motion.p>
       </div>
 
@@ -46,9 +43,9 @@ export function ProblemSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
         >
-          {problems.map((problem, index) => (
+          {problem.items.map((item, index) => (
             <motion.div
-              key={problem}
+              key={item}
               variants={fadeUp}
               className="results-problem-card relative mx-auto flex max-w-lg items-start gap-4 rounded-2xl p-6"
             >
@@ -60,7 +57,7 @@ export function ProblemSection() {
                   Issue {String(index + 1).padStart(2, "0")}
                 </span>
                 <p className="font-satoshi mt-2 text-base leading-relaxed text-white/85 md:text-lg">
-                  {problem}
+                  {item}
                 </p>
               </div>
             </motion.div>

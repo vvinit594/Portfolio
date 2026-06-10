@@ -3,8 +3,13 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import { fadeUp } from "./motion";
+import type { CaseStudy } from "./types";
 
-export function TestimonialSection() {
+type TestimonialSectionProps = {
+  testimonial: NonNullable<CaseStudy["testimonial"]>;
+};
+
+export function TestimonialSection({ testimonial }: TestimonialSectionProps) {
   return (
     <section className="results-section px-6 py-28 md:px-10 md:py-36 lg:px-16">
       <motion.blockquote
@@ -16,15 +21,13 @@ export function TestimonialSection() {
       >
         <Quote className="mx-auto size-10 text-violet-300/50" />
         <p className="font-satoshi mt-8 text-2xl font-medium leading-relaxed text-white md:text-3xl lg:text-4xl">
-          &ldquo;The platform transformed how we run events. What used to take hours of
-          manual coordination now happens in real time — our volunteers are more
-          confident and our leadership has full visibility.&rdquo;
+          &ldquo;{testimonial.quote}&rdquo;
         </p>
         <footer className="mt-10">
-          <p className="font-satoshi text-lg font-medium text-white">Event Operations Lead</p>
-          <p className="font-satoshi mt-2 text-sm text-white/45">
-            Large-Scale Community Event Organization
+          <p className="font-satoshi text-lg font-medium text-white">
+            {testimonial.author}
           </p>
+          <p className="font-satoshi mt-2 text-sm text-white/45">{testimonial.role}</p>
         </footer>
       </motion.blockquote>
     </section>

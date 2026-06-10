@@ -4,8 +4,31 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { fadeUp } from "./motion";
+import type { CaseStudy } from "./types";
 
-export function CaseStudyCover() {
+type CaseStudyCoverProps = {
+  study: CaseStudy;
+};
+
+function CoverPlaceholder() {
+  return (
+    <div className="space-y-3">
+      <div className="h-3 w-2/3 rounded-full bg-white/10" />
+      <div className="grid grid-cols-3 gap-2">
+        <div className="results-mockup-stat h-16 rounded-lg" />
+        <div className="results-mockup-stat h-16 rounded-lg" />
+        <div className="results-mockup-stat h-16 rounded-lg" />
+      </div>
+      <div className="h-24 rounded-lg bg-white/[0.04]" />
+      <div className="grid grid-cols-2 gap-2">
+        <div className="h-14 rounded-lg bg-violet-500/15" />
+        <div className="h-14 rounded-lg bg-white/[0.04]" />
+      </div>
+    </div>
+  );
+}
+
+export function CaseStudyCover({ study }: CaseStudyCoverProps) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -13,6 +36,9 @@ export function CaseStudyCover() {
   });
   const y = useTransform(scrollYProgress, [0, 1], [40, -40]);
   const rotate = useTransform(scrollYProgress, [0, 1], [2, -2]);
+
+  const statCard = study.floatingCards?.find((c) => c.variant === "stat");
+  const badgeCard = study.floatingCards?.find((c) => c.variant === "badge");
 
   return (
     <section
@@ -26,12 +52,12 @@ export function CaseStudyCover() {
           viewport={{ once: true, margin: "-80px" }}
           variants={fadeUp}
         >
-          <span className="results-badge font-satoshi">Event Management Platform</span>
+          <span className="results-badge font-satoshi">{study.category}</span>
           <h2 className="font-satoshi mt-8 text-4xl font-medium leading-tight text-white md:text-5xl lg:text-6xl">
-            Event Registration &amp; Check-In Platform
+            {study.title}
           </h2>
           <p className="font-satoshi mt-6 text-lg leading-relaxed text-white/60 md:text-xl">
-            Transforming manual event operations into a scalable digital workflow.
+            {study.tagline}
           </p>
         </motion.div>
 
@@ -49,40 +75,62 @@ export function CaseStudyCover() {
               <span className="size-2 rounded-full bg-amber-400/80" />
               <span className="size-2 rounded-full bg-emerald-400/80" />
             </div>
-            <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/[0.06]">
-              <Image
-                src="/First.png"
-                alt="Event Registration & Check-In Platform dashboard"
-                fill
-                priority
-                sizes="(max-width: 768px) 90vw, 45vw"
-                className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-              />
-            </div>
+            {study.coverImage ? (
+              <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg border border-white/[0.06]">
+                <Image
+                  src={study.coverImage}
+                  alt={study.coverImageAlt ?? study.title}
+                  fill
+                  priority={study.coverPriority}
+                  sizes="(max-width: 768px) 90vw, 45vw"
+                  className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                />
+              </div>
+            ) : (
+              <div className="rounded-lg border border-white/[0.06] p-3">
+                <CoverPlaceholder />
+              </div>
+            )}
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="results-floating-card absolute -right-2 bottom-6 w-40 rounded-xl p-3 md:bottom-8 md:w-52 md:p-4"
-          >
-            <p className="font-satoshi text-xs text-white/45">Live Check-Ins</p>
-            <p className="font-satoshi mt-1 text-xl font-medium text-white md:text-2xl">2,847</p>
-            <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
-              <div className="h-full w-3/4 rounded-full bg-violet-500" />
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.45 }}
-            className="results-floating-card absolute -left-2 top-12 w-36 rounded-xl p-3 md:top-16 md:w-48"
-          >
-            <p className="font-satoshi text-xs text-emerald-300/80">Verified</p>
-            <p className="font-satoshi mt-1 text-sm text-white/80">Participant #1842</p>
-          </motion.div>
+
+          {statCard && (
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="results-floating-card absolute -right-2 bottom-6 w-40 rounded-xl p-3 md:bottom-8 md:w-52 md:p-4"
+            >
+              <p className="font-satoshi text-xs text-white/45">{statCard.label}</p>
+              <p className="font-satoshi mt-1 text-xl font-medium text-white md:text-2xl">
+                {statCard.value}
+              </p>
+              <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
+                <div className="h-full w-3/4 rounded-full bg-violet-500" />
+              </div>
+            </motion.div>
+          )}
+
+          {badgeCard && (
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.45 }}
+              className="results-floating-card absolute -left-2 top-12 w-36 rounded-xl p-3 md:top-16 md:w-48"
+            >
+              <p
+                className={`font-satoshi text-xs ${
+                  badgeCard.accent === "emerald"
+                    ? "text-emerald-300/80"
+                    : "text-violet-300/80"
+                }`}
+              >
+                {badgeCard.label}
+              </p>
+              <p className="font-satoshi mt-1 text-sm text-white/80">{badgeCard.value}</p>
+            </motion.div>
+          )}
         </motion.div>
       </div>
     </section>

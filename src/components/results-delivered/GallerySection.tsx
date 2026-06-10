@@ -3,40 +3,35 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "./motion";
+import type { GalleryItem } from "./types";
 
-const galleryItems = [
-  {
-    src: "/Registration.png",
-    title: "Registration Dashboard",
-    description: "Centralized participant registration and management system.",
-  },
-  {
-    src: "/Volunteer_checkin.png",
-    title: "Volunteer Check-In View",
-    description: "Real-time participant verification for event volunteers.",
-  },
-  {
-    src: "/Collection_tracker.png",
-    title: "Collection Tracker",
-    description: "Track Bib, T-Shirt and Goodies collection with status updates.",
-  },
-  {
-    src: "/Live_activity.png",
-    title: "Live Activity Dashboard",
-    description: "Monitor participant activity and event operations in real time.",
-  },
-  {
-    src: "/Export.png",
-    title: "Reporting & Export System",
-    description: "Generate exportable reports and event analytics.",
-  },
-];
+type GalleryCardProps = GalleryItem;
 
-type GalleryCardProps = {
-  src: string;
-  title: string;
-  description: string;
-};
+function GalleryPlaceholder() {
+  return (
+    <div className="absolute inset-0 bg-gradient-to-br from-violet-600/20 to-indigo-900/15">
+      <div className="absolute inset-4 rounded-xl border border-white/10 bg-[#0f0f14]/90 p-4">
+        <div className="mb-4 flex gap-1.5">
+          <span className="size-2 rounded-full bg-white/20" />
+          <span className="size-2 rounded-full bg-white/20" />
+          <span className="size-2 rounded-full bg-white/20" />
+        </div>
+        <div className="space-y-3">
+          <div className="h-2.5 w-1/2 rounded-full bg-white/15" />
+          <div className="grid grid-cols-2 gap-2">
+            <div className="h-20 rounded-lg bg-white/[0.06]" />
+            <div className="h-20 rounded-lg bg-white/[0.06]" />
+          </div>
+          <div className="h-16 rounded-lg bg-white/[0.04]" />
+          <div className="h-10 rounded-lg bg-violet-500/20" />
+        </div>
+      </div>
+      <p className="font-satoshi absolute bottom-4 left-4 text-sm text-white/50">
+        Screenshot coming soon
+      </p>
+    </div>
+  );
+}
 
 function GalleryCard({ src, title, description }: GalleryCardProps) {
   return (
@@ -45,14 +40,18 @@ function GalleryCard({ src, title, description }: GalleryCardProps) {
       className="results-gallery-card group w-[min(88vw,340px)] shrink-0 sm:w-[380px] md:w-[420px]"
     >
       <div className="results-gallery-image-wrap relative aspect-[16/10] overflow-hidden rounded-xl">
-        <Image
-          src={src}
-          alt={title}
-          fill
-          loading="lazy"
-          sizes="(max-width: 640px) 88vw, (max-width: 1024px) 380px, 420px"
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
-        />
+        {src ? (
+          <Image
+            src={src}
+            alt={title}
+            fill
+            loading="lazy"
+            sizes="(max-width: 640px) 88vw, (max-width: 1024px) 380px, 420px"
+            className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        ) : (
+          <GalleryPlaceholder />
+        )}
       </div>
       <div className="mt-4 px-1">
         <h3 className="font-satoshi text-base font-medium text-white md:text-lg">
@@ -66,7 +65,11 @@ function GalleryCard({ src, title, description }: GalleryCardProps) {
   );
 }
 
-export function GallerySection() {
+type GallerySectionProps = {
+  gallery: GalleryItem[];
+};
+
+export function GallerySection({ gallery }: GallerySectionProps) {
   return (
     <section className="results-section overflow-hidden px-6 py-28 md:px-10 md:py-36 lg:px-16">
       <motion.div
@@ -91,13 +94,9 @@ export function GallerySection() {
         viewport={{ once: true, margin: "-40px" }}
         className="results-gallery-scroll mt-16 flex snap-x snap-mandatory gap-6 overflow-x-auto pb-6 pl-6 pr-6 md:pl-[max(2.5rem,calc((100vw-80rem)/2+2.5rem))] md:pr-16"
       >
-        {galleryItems.map((item) => (
+        {gallery.map((item) => (
           <div key={item.title} className="snap-center">
-            <GalleryCard
-              src={item.src}
-              title={item.title}
-              description={item.description}
-            />
+            <GalleryCard {...item} />
           </div>
         ))}
       </motion.div>

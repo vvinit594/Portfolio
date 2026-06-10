@@ -2,16 +2,13 @@
 
 import { motion } from "framer-motion";
 import { fadeUp, stagger } from "./motion";
+import type { CaseStudy } from "./types";
 
-const flow = [
-  "Participant Registration",
-  "Verification System",
-  "Volunteer Dashboard",
-  "Collection Tracking",
-  "Reporting Engine",
-];
+type SolutionSectionProps = {
+  solution: CaseStudy["solution"];
+};
 
-export function SolutionSection() {
+export function SolutionSection({ solution }: SolutionSectionProps) {
   return (
     <section className="results-section results-solution-bg relative px-6 py-28 md:px-10 md:py-36 lg:px-16">
       <motion.div
@@ -24,9 +21,7 @@ export function SolutionSection() {
         <h2 className="font-satoshi text-4xl font-medium text-white md:text-6xl">
           The Solution
         </h2>
-        <p className="font-satoshi mt-6 text-lg text-white/50">
-          A connected system architecture designed for high-volume event operations.
-        </p>
+        <p className="font-satoshi mt-6 text-lg text-white/50">{solution.subtitle}</p>
       </motion.div>
 
       <motion.div
@@ -36,14 +31,17 @@ export function SolutionSection() {
         whileInView="visible"
         viewport={{ once: true, margin: "-40px" }}
       >
-        {flow.map((step, index) => (
+        {solution.flow.map((step, index) => (
           <div key={step} className="flex w-full flex-col items-center">
-            <motion.div variants={fadeUp} className="results-flow-node w-full rounded-2xl px-8 py-6 text-center">
+            <motion.div
+              variants={fadeUp}
+              className="results-flow-node w-full rounded-2xl px-8 py-6 text-center"
+            >
               <p className="font-satoshi text-lg font-medium text-white md:text-xl">
                 {step}
               </p>
             </motion.div>
-            {index < flow.length - 1 && (
+            {index < solution.flow.length - 1 && (
               <motion.div
                 variants={fadeUp}
                 className="results-flow-connector my-2 flex h-10 flex-col items-center"

@@ -1,31 +1,24 @@
 "use client";
 
 import { ResultsHero } from "./ResultsHero";
-import { CaseStudyCover } from "./CaseStudyCover";
-import { ProblemSection } from "./ProblemSection";
-import { ChallengeSection } from "./ChallengeSection";
-import { SolutionSection } from "./SolutionSection";
-import { FeaturesSection } from "./FeaturesSection";
-import { TechStackSection } from "./TechStackSection";
-import { ImpactSection } from "./ImpactSection";
-import { GallerySection } from "./GallerySection";
-import { TestimonialSection } from "./TestimonialSection";
-import { NextStorySection } from "./NextStorySection";
+import { CaseStudyBlock } from "./CaseStudyBlock";
+import { CaseStudyNav } from "./CaseStudyNav";
+import { caseStudies } from "./case-studies";
 
 export function ResultsDelivered() {
   return (
     <div className="results-page bg-[#0B0B0F]">
       <ResultsHero />
-      <CaseStudyCover />
-      <ProblemSection />
-      <ChallengeSection />
-      <SolutionSection />
-      <FeaturesSection />
-      <TechStackSection />
-      <ImpactSection />
-      <GallerySection />
-      <TestimonialSection />
-      <NextStorySection />
+
+      {caseStudies.map((study, index) => (
+        <div key={study.id}>
+          <CaseStudyBlock study={study} showTopDivider={index > 0} />
+          <CaseStudyNav
+            previous={index > 0 ? caseStudies[index - 1] : undefined}
+            next={index < caseStudies.length - 1 ? caseStudies[index + 1] : undefined}
+          />
+        </div>
+      ))}
     </div>
   );
 }
