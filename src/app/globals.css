@@ -1202,8 +1202,19 @@
   transition: transform 0.4s ease;
 }
 
-.results-gallery-card:hover {
-  transform: scale(1.02);
+.results-gallery-image-wrap {
+  border: 1px solid rgba(147, 51, 234, 0.15);
+  background: rgba(255, 255, 255, 0.02);
+  transition:
+    border-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.results-gallery-card:hover .results-gallery-image-wrap {
+  border-color: rgba(167, 139, 250, 0.45);
+  box-shadow:
+    0 0 32px rgba(124, 58, 237, 0.2),
+    0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 .results-testimonial-card {
